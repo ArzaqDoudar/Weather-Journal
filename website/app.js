@@ -65,7 +65,7 @@ const getData = async () => {
 const updateUI = (data) => {
     console.log('data', data);
     dateDiv.innerHTML = data[0].date
-    tempDiv.innerHTML = data[0].temperature
+    tempDiv.innerHTML = data[0].temperature + 'degrees'
     contentDiv.innerHTML = data[0].feeling
 }
 generateBtn.addEventListener('click', performAction)
