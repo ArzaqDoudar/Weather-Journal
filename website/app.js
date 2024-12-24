@@ -13,8 +13,8 @@ const tempDiv = document.getElementById('temp')
 const contentDiv = document.getElementById('content')
 
 // Create a new date instance dynamically with JS
-let d = new Date();
-let newDate = d.getMonth() + '.' + d.getDate() + '.' + d.getFullYear();
+const d = new Date();
+const newDate = d.getMonth() + 1 + '.' + d.getDate() + '.' + d.getFullYear();
 
 
 const performAction = async () => {
@@ -51,7 +51,7 @@ const postData = async (baseURL, zip, key, feeling) => {
     }
 }
 const getData = async () => {
-    const response = await fetch("/getData")
+    const response = await fetch("/all")
     try {
         const data = await response.json();
         console.log('response from get data === ', typeof (data));
@@ -64,8 +64,32 @@ const getData = async () => {
 
 const updateUI = (data) => {
     console.log('data', data);
-    dateDiv.innerHTML = data[0].date
-    tempDiv.innerHTML = data[0].temperature + 'degrees'
-    contentDiv.innerHTML = data[0].feeling
+
+    dateDiv.innerHTML = data.date
+    tempDiv.innerHTML = data.temperature + ' degrees'
+    contentDiv.innerHTML = data.feeling
+    // dateDiv.innerHTML = data[0].date
+    // tempDiv.innerHTML = data[0].temperature + 'degrees'
+    // contentDiv.innerHTML = data[0].feeling
 }
+
+
+const retrieveData = async () => {
+    const request = await fetch('/all');
+    try {
+        // Transform into JSON
+        const allData = await request.json()
+        console.log(allData)
+        // Write updated data to DOM elements
+        document.getElementById('temp').innerHTML = Math.round(allData.temp) + 'degrees';
+        document.getElementById('content').innerHTML = allData.feel;
+        document.getElementById("date").innerHTML = allData.date;
+    }
+    catch (error) {
+        console.log("error", error);
+        // appropriately handle the error
+    }
+}
+
+
 generateBtn.addEventListener('click', performAction)
