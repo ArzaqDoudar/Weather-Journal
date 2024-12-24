@@ -28,14 +28,15 @@ app.listen(port, () => {
     console.log(`Server listening on port ${port}`)
 })
 
-app.post('/addData', (req, res) => {
+app.post('/addData', addData);
+const addData = (req, res) => {
     console.log("POST")
     let data = req.body;
     console.log('data', data);
     projectData = data
     console.log("projectData = ", projectData);
     res.status(200).send('success')
-});
+}
 
 app.get('/all', (req, res) => {
     console.log("GET")
